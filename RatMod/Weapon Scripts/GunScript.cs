@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using UMM;
 using UnityEngine;
 using ULTRAKIT.Extensions;
-using UnityEngine.SceneManagement;
 
 namespace RatMod.Weapon_Scripts
 {
@@ -30,7 +29,14 @@ namespace RatMod.Weapon_Scripts
                 txt_reloading.enabled = true;
             else
                 txt_num[_man.GunRat_ammo].enabled = true;
-            cooldownOff = CheatsManager.Instance.GetCheatState("ultrakill.no-weapon-cooldown");
+            try
+            {
+                cooldownOff = CheatsManager.Instance?.GetCheatState("ultrakill.no-weapon-cooldown") ?? false;
+            }
+            catch
+            {
+                cooldownOff = false;
+            }
             CheatsManagerPatch.CheatStateChanged.AddListener(OnCheatChange);
         }
 

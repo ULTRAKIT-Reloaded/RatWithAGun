@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UMM;
 using ULTRAKIT.Data;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RatMod
 {
@@ -18,12 +19,22 @@ namespace RatMod
 
         public override void OnModLoaded()
         {
+            SceneManager.sceneLoaded += OnSceneLoaded;
             weapons = ULTRAKIT.Loader.WeaponLoader.LoadWeapons(bundle);
         }
 
         public override void OnModUnload()
         {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             ULTRAKIT.Loader.WeaponLoader.UnloadWeapons("petersone1_ratwithagun");
+        }
+
+        public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (RatVariableManager.Instance)
+            {
+                RatVariableManager.Instance.assetBundle = bundle;
+            }
         }
     }
 }

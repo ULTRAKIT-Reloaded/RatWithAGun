@@ -121,8 +121,14 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Weapon Scripts\BombRat.cs" />
+    <Compile Include="Weapon Scripts\BuilderRat.cs" />
     <Compile Include="Weapon Scripts\GunScript.cs" />
     <Compile Include="RatVariableManager.cs" />
+    <Compile Include="Weapon Scripts\Object Scripts\ExplosionFixer.cs" />
+    <Compile Include="Weapon Scripts\Object Scripts\ProjectileScript.cs" />
+    <Compile Include="Weapon Scripts\Object Scripts\StatueScript.cs" />
+    <Compile Include="Weapon Scripts\Object Scripts\TurretScript.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
