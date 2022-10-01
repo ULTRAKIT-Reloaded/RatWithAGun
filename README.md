@@ -1,4 +1,14 @@
 # RatWithAGun
- Adds a collection of friendly rats with a lust for blood
+A weapon mod for ULTRAKILL that adds a variety of rat-based weaponry to play with.
+
+**Currently in beta**
  
-Extract the contents of RatWithAGun.zip to BepInEx/UMM Mods/
+# Installation
+### WARNING: THIS MODIFICATION IS EXPERIMENTAL AND MAY MESS WITH YOUR GAME INSTALLATION. ONLY INSTALL IF YOU ARE WILLING TO TAKE THE RISK.
+1. Download and install [UMM](https://github.com/Temperz87/ultra-mod-manager) using the provided instructions.
+2. Download and install [ULTRAKIT](https://github.com/PetersonE1/UltrakitLibrary) using the provided instructions.
+3. Extract the contents of RatWithAGun.zip into [Your ULTRAKILL Directory]\BepInEx\UMM Mods\
+
+##
+
+If you have any questions, feel free to DM `Agent of Nyarlathotep#7519` on Discord
