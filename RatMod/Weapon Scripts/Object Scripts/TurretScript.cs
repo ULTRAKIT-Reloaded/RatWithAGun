@@ -26,7 +26,6 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
         private void Start()
         {
             cooldownOff = CheatsManager.Instance.GetCheatState("ultrakill.no-weapon-cooldown");
-            cooldownOff = true;
             InitializeFields();
             Invoke("DestroySelf", timer);
         }

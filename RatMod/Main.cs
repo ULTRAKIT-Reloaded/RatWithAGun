@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 
 namespace RatMod
 {
-    [UKPlugin("Rat With A Gun", "1.0.0", "Adds a collection of rats with a lust for blood", false, true)]
+    [UKPlugin("Rat With A Gun", "0.1.0", "Adds a collection of rats with a lust for blood", false, true)]
     public class Main : UKMod
     {
         private AssetBundle bundle = AssetBundle.LoadFromFile(Directory.GetCurrentDirectory() + @"\BepInEx\UMM Mods\RatWithAGun\petersone1_ratwithagun.assetBundle");
