@@ -12,6 +12,8 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
 {
     public class StatueScript : MonoBehaviour
     {
+        public GameObject sourceWeapon;
+
         private RatVariableManager _man = RatVariableManager.Instance;
         private List<EnemyIdentifier> killedEnemies;
 
@@ -52,6 +54,8 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                     enemy.GetComponent<Idol>().Death();
                 killedEnemies.Add(enemy);
                 counter++;
+                bool boss = enemy.bigEnemy;
+                StyleHUD.Instance.DecayFreshness(sourceWeapon, "ultrakill.exploded", boss);
 
                 if (counter == 1)
                 {

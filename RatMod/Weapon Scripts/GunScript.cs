@@ -60,6 +60,7 @@ namespace RatMod.Weapon_Scripts
                 txt_num[ammo].enabled = true;
 
                 GameObject shot = Instantiate(beam);
+                shot.GetComponent<RevolverBeam>().sourceWeapon = gameObject;
                 shot.transform.position = origin.transform.position;
                 shot.transform.rotation = CameraController.Instance.transform.rotation;
 

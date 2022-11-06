@@ -8,6 +8,7 @@ using UnityEngine;
 using ULTRAKIT.Extensions;
 using ULTRAKIT.Data;
 using System.Collections;
+using RatMod.Weapon_Scripts.Object_Scripts;
 
 namespace RatMod.Weapon_Scripts
 {
@@ -55,6 +56,7 @@ namespace RatMod.Weapon_Scripts
                     Invoke("Ready", 1.5f);
                 }
                 GameObject proj = Instantiate(projectile, origin.position, CameraController.Instance.transform.rotation, null);
+                proj.GetComponent<ProjectileScript>().sourceWeapon = gameObject;
                 proj.AddComponent<FloatingPointErrorPreventer>();
                 proj.AddComponent<DestroyOnCheckpointRestart>();
                 proj.AddComponent<RemoveOnTime>().time = 30;

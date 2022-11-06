@@ -13,6 +13,8 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
 {
     public class ProjectileScript : MonoBehaviour
     {
+        public GameObject sourceWeapon = null;
+
         private RatVariableManager _man = RatVariableManager.Instance;
         private LayerMask mask = LayerMask.GetMask("Environment", "Outdoors", "EnemyTrigger", "BigCorpse");
 
@@ -68,7 +70,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             proj.explosionEffect = _man.Asset_MindflayerExplosion;
             if (proj.target != null)
                 proj.homingType = HomingType.Loose;
-            proj.explosionEffect.AddComponent<ExplosionFixer>();
+            proj.explosionEffect.AddComponent<ExplosionFixer>().sourceWeapon = sourceWeapon;
 
             Grenade gren = gameObject.AddComponent<Grenade>();
             gren.explosion = proj.explosionEffect;

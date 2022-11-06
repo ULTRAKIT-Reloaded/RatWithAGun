@@ -8,6 +8,7 @@ using UnityEngine;
 using ULTRAKIT.Extensions;
 using ULTRAKIT.Data;
 using System.Collections;
+using RatMod.Weapon_Scripts.Object_Scripts;
 
 namespace RatMod.Weapon_Scripts
 {
@@ -91,6 +92,7 @@ namespace RatMod.Weapon_Scripts
                         Invoke("ReloadTurret", turretTimer);
                     }
                     GameObject turret = Instantiate(_turret, hit.point, Quaternion.identity, null);
+                    turret.GetComponent<TurretScript>().sourceWeapon = gameObject;
                     turret.transform.LookAt(head);
                     turret.transform.rotation = Quaternion.FromToRotation(turret.transform.up, hit.normal) * transform.rotation;
                     turret.AddComponent<DestroyOnCheckpointRestart>();
@@ -128,6 +130,7 @@ namespace RatMod.Weapon_Scripts
                     if (_man.BuilderRat_lastStatue)
                         Destroy(_man.BuilderRat_lastStatue);
                     GameObject statue = Instantiate(_statue, hit.point, Quaternion.identity, null);
+                    statue.GetComponent<StatueScript>().sourceWeapon = gameObject;
                     statue.transform.LookAt(head);
                     statue.transform.rotation = Quaternion.FromToRotation(statue.transform.up, hit.normal) * transform.rotation;
                     statue.AddComponent<DestroyOnCheckpointRestart>();

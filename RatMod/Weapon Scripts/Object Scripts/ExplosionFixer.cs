@@ -13,11 +13,14 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
 {
     public class ExplosionFixer : MonoBehaviour
     {
+        public GameObject sourceWeapon = null;
+
         private void Start()
         {
             foreach (Explosion explosion in GetComponentsInChildren<Explosion>())
             {
                 explosion.enemy = false;
+                explosion.sourceWeapon = sourceWeapon;
             }
         }
     }

@@ -12,6 +12,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
 {
     public class TurretScript : MonoBehaviour
     {
+        public GameObject sourceWeapon = null;
         LayerMask mask = LayerMask.GetMask("Environment", "Outdoors", "EnemyTrigger", "BigCorpse");
 
         Transform gun;
@@ -73,7 +74,8 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                 if (foundTarget)
                 {
                     gun.rotation = Quaternion.LookRotation(direction);
-                    Instantiate(beam, origin.position, gun.rotation);
+                    GameObject shot = Instantiate(beam, origin.position, gun.rotation);
+                    shot.GetComponent<RevolverBeam>().sourceWeapon = sourceWeapon;
                     lastFired = Time.time;
                 }
             }
