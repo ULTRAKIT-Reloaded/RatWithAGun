@@ -31,6 +31,7 @@ namespace RatMod
 
         public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            CheatsManager.Instance.RegisterCheat(Cheats.TurretOrb.OrbEnabler.cheat);
             if (RatVariableManager.Instance)
             {
                 RatVariableManager.Instance.assetBundle = bundle;

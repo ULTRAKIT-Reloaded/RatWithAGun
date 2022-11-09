@@ -119,6 +119,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cheats\TurretOrb\CheatOrb.cs" />
+    <Compile Include="Cheats\TurretOrb\OrbEnabler.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Weapon Scripts\BombRat.cs" />

@@ -53,7 +53,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                 {
                     EnemyIdentifier enemy = enemyList[pair.Value];
 
-                    if (enemy.enemyType == EnemyType.Idol)
+                    if (enemy.enemyType == EnemyType.Idol || enemy.blessed)
                         continue;
 
                     Vector3 d = (enemy.transform.position - gun.position).normalized;
