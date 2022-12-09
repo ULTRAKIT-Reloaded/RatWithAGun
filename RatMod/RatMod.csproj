@@ -68,8 +68,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ULTRAKIT.Loader.dll</HintPath>
     </Reference>
-    <Reference Include="UMM">
-      <HintPath>..\lib\UMM.dll</HintPath>
+    <Reference Include="UMM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\branch\UMM.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
       <HintPath>..\lib\Unity.InputSystem.dll</HintPath>
