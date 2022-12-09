@@ -9,6 +9,7 @@ using ULTRAKIT.Extensions;
 using ULTRAKIT.Data;
 using System.Collections;
 using RatMod.Weapon_Scripts.Object_Scripts;
+using static UnityEngine.GraphicsBuffer;
 
 namespace RatMod.Weapon_Scripts
 {
@@ -96,24 +97,7 @@ namespace RatMod.Weapon_Scripts
                     turret.transform.LookAt(head);
                     turret.transform.rotation = Quaternion.FromToRotation(turret.transform.up, hit.normal) * transform.rotation;
                     turret.AddComponent<DestroyOnCheckpointRestart>();
-                    foreach (var c in turret.GetComponentsInChildren<Renderer>(true))
-                    {
-                        c.gameObject.layer = LayerMask.NameToLayer("Outdoors");
-
-                        var glow = c.gameObject.GetComponent<Glow>();
-
-                        if (glow)
-                        {
-                            c.material.shader = Shader.Find("psx/railgun");
-                            c.material.SetFloat("_EmissivePosition", 5);
-                            c.material.SetFloat("_EmissiveStrength", glow.glowIntensity);
-                            c.material.SetColor("_EmissiveColor", glow.glowColor);
-                        }
-                        else
-                        {
-                            c.material.shader = Shader.Find(c.material.shader.name);
-                        }
-                    }
+                    PeterExtensions.RenderObject(turret, LayerMask.NameToLayer("Outdoors"));
                     turret.SetActive(true);
                 }
             }
@@ -134,24 +118,7 @@ namespace RatMod.Weapon_Scripts
                     statue.transform.LookAt(head);
                     statue.transform.rotation = Quaternion.FromToRotation(statue.transform.up, hit.normal) * transform.rotation;
                     statue.AddComponent<DestroyOnCheckpointRestart>();
-                    foreach (var c in statue.GetComponentsInChildren<Renderer>(true))
-                    {
-                        c.gameObject.layer = LayerMask.NameToLayer("Outdoors");
-
-                        var glow = c.gameObject.GetComponent<Glow>();
-
-                        if (glow)
-                        {
-                            c.material.shader = Shader.Find("psx/railgun");
-                            c.material.SetFloat("_EmissivePosition", 5);
-                            c.material.SetFloat("_EmissiveStrength", glow.glowIntensity);
-                            c.material.SetColor("_EmissiveColor", glow.glowColor);
-                        }
-                        else
-                        {
-                            c.material.shader = Shader.Find(c.material.shader.name);
-                        }
-                    }
+                    PeterExtensions.RenderObject(statue, LayerMask.NameToLayer("Outdoors"));
                     _man.BuilderRat_lastStatue = statue;
                     statue.SetActive(true);
                 }

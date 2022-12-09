@@ -8,6 +8,7 @@ using UnityEngine;
 using ULTRAKIT.Extensions;
 using ULTRAKIT.Data;
 using System.Collections;
+using static UnityEngine.GraphicsBuffer;
 
 namespace RatMod.Weapon_Scripts.Object_Scripts
 {
@@ -34,11 +35,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             part2 = transform.Find("Component-2");
             part3 = transform.Find("Component-3");
 
-            foreach (Renderer obj in GetComponentsInChildren<Renderer>())
-            {
-                obj.gameObject.layer = LayerMask.NameToLayer("Projectile");
-                obj.material.shader = Shader.Find(obj.material.shader.name);
-            }
+            PeterExtensions.RenderObject(gameObject, LayerMask.NameToLayer("Projectile"));
 
             proj.target = FindTarget();
             SetProjectile();

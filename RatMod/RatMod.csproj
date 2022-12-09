@@ -48,19 +48,24 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="ULTRAKIT">
+    <Reference Include="ULTRAKIT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ULTRAKIT.dll</HintPath>
     </Reference>
-    <Reference Include="ULTRAKIT.Data">
+    <Reference Include="ULTRAKIT.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ULTRAKIT.Data.dll</HintPath>
     </Reference>
-    <Reference Include="ULTRAKIT.Editor">
+    <Reference Include="ULTRAKIT.Editor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ULTRAKIT.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="ULTRAKIT.Extensions">
+    <Reference Include="ULTRAKIT.Extensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ULTRAKIT.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="ULTRAKIT.Loader">
+    <Reference Include="ULTRAKIT.Loader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ULTRAKIT.Loader.dll</HintPath>
     </Reference>
     <Reference Include="UMM">
@@ -119,6 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bigger.cs" />
     <Compile Include="Cheats\TurretOrb\CheatOrb.cs" />
     <Compile Include="Cheats\TurretOrb\OrbEnabler.cs" />
     <Compile Include="Main.cs" />

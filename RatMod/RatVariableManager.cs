@@ -32,6 +32,7 @@ namespace RatMod
         public int BuilderRat_numToBe = 15;
         public GameObject BuilderRat_lastStatue;
 
+
         public new void OnEnable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;

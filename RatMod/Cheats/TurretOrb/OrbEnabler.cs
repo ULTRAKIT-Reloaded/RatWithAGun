@@ -17,24 +17,7 @@ namespace RatMod.Cheats.TurretOrb
         {
             activeOrb = GameObject.Instantiate(RatVariableManager.Instance.assetBundle.PrefabFind(RatVariableManager.Instance.assetBundle.name, "turretorb"), 
                 NewMovement.Instance.transform.position + new Vector3(0, 5, 0), Quaternion.identity, NewMovement.Instance.transform);
-            foreach (var c in activeOrb.GetComponentsInChildren<Renderer>(true))
-            {
-                c.gameObject.layer = LayerMask.NameToLayer("Outdoors");
-
-                var glow = c.gameObject.GetComponent<Glow>();
-
-                if (glow)
-                {
-                    c.material.shader = Shader.Find("psx/railgun");
-                    c.material.SetFloat("_EmissivePosition", 5);
-                    c.material.SetFloat("_EmissiveStrength", glow.glowIntensity);
-                    c.material.SetColor("_EmissiveColor", glow.glowColor);
-                }
-                else
-                {
-                    c.material.shader = Shader.Find(c.material.shader.name);
-                }
-            }
+            PeterExtensions.RenderObject(activeOrb, LayerMask.NameToLayer("Outdoors"));
         }
 
         private static void Disable()
