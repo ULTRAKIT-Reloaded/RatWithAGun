@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 namespace RatMod
 {
     [UKDependency("petersone1.ultrakitreloaded", "1.1.5")]
-    [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.1.0", "Adds a collection of rats with a lust for blood", false, true)]
+    [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.2.0", "Adds a collection of rats with a lust for blood", false, true)]
     public class Main : UKMod
     {
         private AssetBundle bundle = AssetBundle.LoadFromFile(Directory.GetCurrentDirectory() + @"\BepInEx\UMM Mods\RatWithAGun\petersone1_ratwithagun.assetBundle");
