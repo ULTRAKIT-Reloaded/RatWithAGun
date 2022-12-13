@@ -6,7 +6,7 @@ A weapon mod for ULTRAKILL that adds a variety of rat-based weaponry to play wit
 # Installation
 ### This mod is in an early beta state and bugs are likely
 1. Download and install [UMM](https://github.com/Temperz87/ultra-mod-manager) using the provided instructions.
-2. Download and install [ULTRAKIT](https://github.com/PetersonE1/UltrakitLibrary) using the provided instructions (Minimum version 1.1.0).
+2. Download and install [ULTRAKIT](https://github.com/PetersonE1/UltrakitLibrary) using the provided instructions (Minimum version 1.3.2).
 3. Extract the contents of RatWithAGun.zip into [Your ULTRAKILL Directory]\BepInEx\UMM Mods\
 
 ##
