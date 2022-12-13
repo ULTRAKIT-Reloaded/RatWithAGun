@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 
 namespace RatMod
 {
-    [UKDependency("petersone1.ultrakitreloaded", "1.1.5")]
+    [UKDependency("petersone1.ultrakitreloaded", "1.3.2")]
     [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.2.0", "Adds a collection of rats with a lust for blood", false, true)]
     public class Main : UKMod
     {
