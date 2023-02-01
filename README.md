@@ -9,6 +9,8 @@ A weapon mod for ULTRAKILL that adds a variety of rat-based weaponry to play wit
 2. Download and install [ULTRAKIT](https://github.com/PetersonE1/UltrakitLibrary) using the provided instructions (Minimum version 1.3.2).
 3. Download RatWithAGun.zip from the releases page (right side of this page on PC, bottom on mobile).
 4. Extract the contents of RatWithAGun.zip into [Your ULTRAKILL Directory]\BepInEx\UMM Mods\
+## Alternate Installation
+Download Rat With A Gun on [Thunderstore](https://thunderstore.io/c/ultrakill/p/ULTRAKIT/RatWithAGun/)
 
 ##
 
