@@ -153,6 +153,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="petersone1_ratwithagun.assetBundle" />
     <None Include="Resources\petersone1_ratwithagun.assetBundle" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

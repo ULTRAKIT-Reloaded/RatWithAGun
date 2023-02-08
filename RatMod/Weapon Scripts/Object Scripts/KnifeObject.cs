@@ -23,17 +23,16 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
         private bool _enabled = false;
         private bool _traveling = true;
         private bool _attached = false;
+        private bool _findingTarget = false;
         private EnemyIdentifier Target;
         private NavMeshAgent agent;
         private Rigidbody rb;
+        private EnemyIdentifier CachedEnemy;
 
         public void Awake()
         {
-            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAA 1");
             rb = GetComponent<Rigidbody>();
-            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAA 2");
             agent = GetComponent<NavMeshAgent>();
-            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAA 3");
             agent.areaMask = 13;
         }
 
@@ -82,28 +81,37 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             }
             if (Target == null)
             {
-                EnemyIdentifier[] enemyList = EnemyTracker.Instance.GetCurrentEnemies().ToArray();
-                if (enemyList.Length == 0)
-                    return;
-
-                SortedDictionary<float, int> distances = new SortedDictionary<float, int>();
-                for (int i = 0; i < enemyList.Length; i++)
-                {
-                    distances.Add(Vector3.Distance(transform.position, enemyList[i].transform.position), i);
-                }
-                
-                foreach (var pair in distances)
-                {
-                    agent.SetDestination(enemyList[pair.Value].transform.position);
-                    if (agent.hasPath)
-                    {
-                        Target = enemyList[pair.Value];
-                        break;
-                    }
-                }
+                UKLogger.Log("Finding target");
+                FindTarget();
             }
 
             if (_traveling) Travel();
+        }
+
+        private void FindTarget()
+        {
+            if (_findingTarget) return;
+            _findingTarget = true;
+            EnemyIdentifier[] enemyList = EnemyTracker.Instance.GetCurrentEnemies().ToArray();
+            if (enemyList.Length == 0)
+                return;
+
+            SortedDictionary<float, int> distances = new SortedDictionary<float, int>();
+            for (int i = 0; i < enemyList.Length; i++)
+            {
+                distances.Add(Vector3.Distance(transform.position, enemyList[i].transform.position), i);
+            }
+
+            foreach (var pair in distances)
+            {
+                agent.SetDestination(enemyList[pair.Value].transform.position);
+                if (agent.hasPath)
+                {
+                    Target = enemyList[pair.Value];
+                    break;
+                }
+            }
+            _findingTarget = false;
         }
 
         private void Travel()
@@ -118,9 +126,8 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             {
                 agent.enabled = false;
                 _traveling = false;
-                rb.isKinematic = false;
+                StartCoroutine(Jump());
             }
-            Jump();
         }
 
         private IEnumerator Jump()
@@ -128,9 +135,10 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             float jumpTime = 0f;
             Vector3 startPos = transform.position;
             Vector3 target = new Vector3();
-            while (!Target.dead && !_attached)
+            bool isWeakpoint = Target.weakPoint;
+            while (Target && !Target.dead && /*!_attached*/ Vector3.Distance(transform.position, target) > 0.2f)
             {
-                if (Target.weakPoint)
+                if (isWeakpoint)
                 {
                     target = Target.weakPoint.transform.position /*- transform.position*/;
                     //rb.AddForce(new Vector3(target.x * JumpForce, target.y * JumpForce, target.z * JumpForce));
@@ -149,16 +157,21 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             }
 
             if (_attached)
+            {
+                CachedEnemy = Target;
                 Invoke("Damage", 0.25f);
+            }
 
             yield return null;
         }
 
         private void Damage()
         {
+            if (CachedEnemy != Target) return;
             if (Target != null && !Target.dead)
             {
                 Target.DeliverDamage(Target.gameObject, new Vector3(), transform.position, DAMAGE, false);
+                if (Target.dead) return;
                 Invoke("Damage", 0.25f);
             }
         }

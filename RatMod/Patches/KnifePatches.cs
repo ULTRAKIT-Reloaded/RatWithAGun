@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using HarmonyLib;
 using RatMod.Weapon_Scripts.Object_Scripts;
+using ULTRAKIT.Extensions;
 
 namespace RatMod.Patches
 {

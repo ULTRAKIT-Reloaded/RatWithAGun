@@ -8,6 +8,7 @@ using UMM;
 using ULTRAKIT.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using HarmonyLib;
 
 namespace RatMod
 {
@@ -20,6 +21,7 @@ namespace RatMod
 
         public override void OnModLoaded()
         {
+            Init();
             SceneManager.sceneLoaded += OnSceneLoaded;
             weapons = ULTRAKIT.Loader.WeaponLoader.LoadWeapons(bundle);
             ULTRAKIT.Loader.BuffLoader.RegisterBuff(Bigger.buff);
@@ -38,6 +40,12 @@ namespace RatMod
             {
                 RatVariableManager.Instance.assetBundle = bundle;
             }
+        }
+
+        private static void Init()
+        {
+            Harmony harmony = new Harmony("RatWithAGun");
+            harmony.PatchAll();
         }
     }
 }
