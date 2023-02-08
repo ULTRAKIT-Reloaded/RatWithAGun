@@ -8,6 +8,7 @@ using UnityEngine;
 using ULTRAKIT.Extensions;
 using UnityEngine.AI;
 using System.Reflection.Emit;
+using System.Collections;
 
 namespace RatMod.Weapon_Scripts.Object_Scripts
 {
@@ -15,6 +16,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
     {
         public double timeLeft;
         private readonly float JumpForce = 1000f;
+        private readonly float DAMAGE = 0.2f;
 
         LayerMask mask = LayerMask.GetMask("Environment", "Outdoors");
 
@@ -27,8 +29,11 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
 
         public void Awake()
         {
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAA 1");
             rb = GetComponent<Rigidbody>();
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAA 2");
             agent = GetComponent<NavMeshAgent>();
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAA 3");
             agent.areaMask = 13;
         }
 
@@ -50,6 +55,9 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                 _traveling = false;
                 transform.parent = collider.transform;
                 _attached = true;
+                RaycastHit hit;
+                Physics.Raycast(transform.position, (collider.transform.position - transform.position).normalized, out hit, Mathf.Infinity, 12);
+                transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
             }
             agent.enabled = _traveling;
         }
@@ -96,10 +104,6 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             }
 
             if (_traveling) Travel();
-            if (_attached)
-            {
-                Target.Explode();
-            }
         }
 
         private void Travel()
@@ -115,16 +119,47 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                 agent.enabled = false;
                 _traveling = false;
                 rb.isKinematic = false;
+            }
+            Jump();
+        }
+
+        private IEnumerator Jump()
+        {
+            float jumpTime = 0f;
+            Vector3 startPos = transform.position;
+            Vector3 target = new Vector3();
+            while (!Target.dead && !_attached)
+            {
                 if (Target.weakPoint)
                 {
-                    Vector3 target = Target.weakPoint.transform.position - transform.position;
-                    rb.AddForce(new Vector3(target.x * JumpForce, target.y * JumpForce, target.z * JumpForce));
+                    target = Target.weakPoint.transform.position /*- transform.position*/;
+                    //rb.AddForce(new Vector3(target.x * JumpForce, target.y * JumpForce, target.z * JumpForce));
                 }
                 else
                 {
-                    Vector3 target = Target.transform.position - transform.position;
-                    rb.AddForce(new Vector3(target.x * JumpForce, (target.y + 1) * JumpForce, target.z * JumpForce));
+                    target = Target.transform.position /*- transform.position*/;
+                    //rb.AddForce(new Vector3(target.x * JumpForce, (target.y + 1) * JumpForce, target.z * JumpForce));
                 }
+
+                jumpTime += Time.fixedDeltaTime;
+                float mix = 10 * Mathf.Log10(jumpTime + 1);
+                transform.position = Vector3.Lerp(startPos, target, mix);
+
+                yield return new WaitForFixedUpdate();
+            }
+
+            if (_attached)
+                Invoke("Damage", 0.25f);
+
+            yield return null;
+        }
+
+        private void Damage()
+        {
+            if (Target != null && !Target.dead)
+            {
+                Target.DeliverDamage(Target.gameObject, new Vector3(), transform.position, DAMAGE, false);
+                Invoke("Damage", 0.25f);
             }
         }
 
