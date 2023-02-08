@@ -12,6 +12,9 @@ A weapon mod for ULTRAKILL that adds a variety of rat-based weaponry to play wit
 ## Alternate Installation
 Download Rat With A Gun on [Thunderstore](https://thunderstore.io/c/ultrakill/p/ULTRAKIT/RatWithAGun/)
 
+## Development Trello
+https://trello.com/b/LISfZgT7/rat-with-a-gun
+
 ##
 
 If you have any questions, feel free to DM `Agent of Nyarlathotep#7519` on Discord
