@@ -12,19 +12,11 @@ using UnityEngine.SceneManagement;
 namespace RatMod
 {
     [UKDependency("petersone1.ultrakitreloaded", "1.3.2")]
-<<<<<<< HEAD
     [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.2.2", "Adds a collection of rats with a lust for blood", false, true)]
     public class Main : UKMod
     {
         private AssetBundle bundle = AssetBundle.LoadFromMemory(Properties.Resources.petersone1_ratwithagun);
-        private Weapon[] weapons;
-=======
-    [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.2.1", "Adds a collection of rats with a lust for blood", false, true)]
-    public class Main : UKMod
-    {
-        private AssetBundle bundle = AssetBundle.LoadFromMemory(Properties.Resources.petersone1_ratwithagun);
         public Weapon[] weapons;
->>>>>>> 8a42be14651c428c53e8cf2082cc0564d66756bd
 
         public override void OnModLoaded()
         {
