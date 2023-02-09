@@ -116,7 +116,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
 
         private void Travel()
         {
-            if (!Target) return;
+            if (!Target || Target.dead) return;
             //RaycastHit hit;
             //Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity);
             //transform.LookAt(Target.transform.position);
