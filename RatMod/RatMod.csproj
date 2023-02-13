@@ -68,9 +68,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ULTRAKIT.Loader.dll</HintPath>
     </Reference>
-    <Reference Include="UMM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\branch\UMM.dll</HintPath>
+    <Reference Include="UMM">
+      <HintPath>..\lib\UMM.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
       <HintPath>..\lib\Unity.InputSystem.dll</HintPath>
@@ -129,7 +128,13 @@
     <Compile Include="Cheats\TurretOrb\CheatOrb.cs" />
     <Compile Include="Cheats\TurretOrb\OrbEnabler.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Patches\KnifePatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Weapon Scripts\BombRat.cs" />
     <Compile Include="Weapon Scripts\BuilderRat.cs" />
     <Compile Include="Weapon Scripts\GreechKnife.cs" />
@@ -141,6 +146,15 @@
     <Compile Include="Weapon Scripts\Object Scripts\StatueScript.cs" />
     <Compile Include="Weapon Scripts\Object Scripts\TurretScript.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="petersone1_ratwithagun.assetBundle" />
+    <None Include="Resources\petersone1_ratwithagun.assetBundle" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
