@@ -14,13 +14,8 @@ using ULTRAKIT.Extensions;
 
 namespace RatMod
 {
-<<<<<<< HEAD
     //[UKDependency("petersone1.ultrakitreloaded", "1.3.2")]
-    [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.2.2", "Adds a collection of rats with a lust for blood", false, true)]
-=======
-    [UKDependency("petersone1.ultrakitreloaded", "1.3.2")]
-    [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.3.0", "Adds a collection of rats with a lust for blood", false, true)]
->>>>>>> 5fb73a1f2e081f1ce4d052f7ccf1ba320b63cebe
+    [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.3.1", "Adds a collection of rats with a lust for blood", false, true)]
     public class Main : UKMod
     {
         private AssetBundle bundle = AssetBundle.LoadFromMemory(Properties.Resources.petersone1_ratwithagun);
