@@ -15,15 +15,15 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
     public class KnifeObject : MonoBehaviour
     {
         public double timeLeft;
-        private readonly float JumpForce = 1000f;
         private readonly float DAMAGE = 0.2f;
 
         LayerMask mask = LayerMask.GetMask("Environment", "Outdoors");
 
         private bool _enabled = false;
-        private bool _traveling = true;
+        private bool _traveling = false;
         private bool _attached = false;
         private bool _findingTarget = false;
+        private bool _hurting = false;
         private EnemyIdentifier Target;
         private NavMeshAgent agent;
         private Rigidbody rb;
@@ -50,13 +50,19 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             }
             if (collider.gameObject.layer == 12 && !_attached)
             {
+                _enabled = true;
                 rb.isKinematic = true;
                 _traveling = false;
                 transform.parent = collider.transform;
                 _attached = true;
-                RaycastHit hit;
-                Physics.Raycast(transform.position, (collider.transform.position - transform.position).normalized, out hit, Mathf.Infinity, 12);
-                transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+                Target = collider.GetComponentInChildren<EnemyIdentifier>() ?? collider.GetComponentInChildren<EnemyIdentifierIdentifier>().eid;
+                UKLogger.Log(_hurting);
+                if (!_hurting)
+                {
+                    _hurting = true;
+                    CachedEnemy = Target;
+                    Invoke("Damage", 0.25f);
+                }
             }
             agent.enabled = _traveling;
         }
@@ -81,7 +87,6 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             }
             if (Target == null)
             {
-                UKLogger.Log("Finding target");
                 FindTarget();
             }
 
@@ -92,6 +97,13 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
         {
             if (_findingTarget) return;
             _findingTarget = true;
+
+            if (transform.parent != null)
+            {
+                Target = transform.parent.GetComponentInChildren<EnemyIdentifier>() ?? transform.parent.GetComponentInChildren<EnemyIdentifierIdentifier>().eid;
+                if (Target) return;
+            }
+
             EnemyIdentifier[] enemyList = EnemyTracker.Instance.GetCurrentEnemies().ToArray();
             if (enemyList.Length == 0)
                 return;
@@ -99,7 +111,14 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             SortedDictionary<float, int> distances = new SortedDictionary<float, int>();
             for (int i = 0; i < enemyList.Length; i++)
             {
-                distances.Add(Vector3.Distance(transform.position, enemyList[i].transform.position), i);
+                try
+                {
+                    distances.Add(Vector3.Distance(transform.position, enemyList[i].transform.position), i);
+                }
+                catch (ArgumentException)
+                {
+                    UKLogger.LogWarning("More than one enemy at the same distance from knife. Skipping...");
+                }
             }
 
             foreach (var pair in distances)
@@ -117,10 +136,6 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
         private void Travel()
         {
             if (!Target || Target.dead) return;
-            //RaycastHit hit;
-            //Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity);
-            //transform.LookAt(Target.transform.position);
-            //transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
             agent.SetDestination(Target.transform.position);
             if (agent.remainingDistance < 8f)
             {
@@ -140,13 +155,11 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             {
                 if (isWeakpoint)
                 {
-                    target = Target.weakPoint.transform.position /*- transform.position*/;
-                    //rb.AddForce(new Vector3(target.x * JumpForce, target.y * JumpForce, target.z * JumpForce));
+                    target = Target.weakPoint.transform.position;
                 }
                 else
                 {
-                    target = Target.transform.position /*- transform.position*/;
-                    //rb.AddForce(new Vector3(target.x * JumpForce, (target.y + 1) * JumpForce, target.z * JumpForce));
+                    target = Target.transform.position;
                 }
 
                 jumpTime += Time.fixedDeltaTime;
@@ -156,8 +169,9 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                 yield return new WaitForFixedUpdate();
             }
 
-            if (_attached)
+            if (_attached && !_hurting)
             {
+                _hurting = true;
                 CachedEnemy = Target;
                 Invoke("Damage", 0.25f);
             }
@@ -167,13 +181,15 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
 
         private void Damage()
         {
-            if (CachedEnemy != Target) return;
+            _hurting = true;
+            if (CachedEnemy != Target) { _hurting = false; return; }
             if (Target != null && !Target.dead)
             {
                 Target.DeliverDamage(Target.gameObject, new Vector3(), transform.position, DAMAGE, false);
-                if (Target.dead) return;
+                if (Target.dead) { _hurting = false; return; }
                 Invoke("Damage", 0.25f);
             }
+            _hurting = false;
         }
 
         public void Recall()
