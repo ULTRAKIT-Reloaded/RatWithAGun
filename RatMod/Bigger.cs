@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using UnityEngine;
 using ULTRAKIT.Extensions;
 using ULTRAKIT.Loader;
+using ULTRAKIT.Extensions.Classes;
+using ULTRAKIT.Extensions.Interfaces;
 
 namespace RatMod
 {
-    /*public class Bigger : IBuff
+    public class Bigger : IBuff
     {
         public EnemyIdentifier eid { get => _eid; set => _eid = value; }
         public bool IsActive { get => active; }
@@ -37,9 +39,9 @@ namespace RatMod
         {
             _eid.DeliverDamage(_eid.gameObject, Vector3.zero, Vector3.zero, -(Time.deltaTime), false);
         }
-    }*/
+    }
 
-    public static class Bigger
+    /*public static class Bigger
     {
         public static void Enable()
         {
@@ -67,5 +69,5 @@ namespace RatMod
             DisableScript = Disable,
             UpdateScript = OnUpdate,
         };
-    }
+    }*/
 }

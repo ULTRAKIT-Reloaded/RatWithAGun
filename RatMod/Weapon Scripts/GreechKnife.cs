@@ -32,7 +32,7 @@ namespace RatMod.Weapon_Scripts
             if (Fire1.WasPerformedThisFrame && ActiveKnife == null)
             {
                 ActiveKnife = Instantiate(_knifePrefab, CameraController.Instance.transform.position + CameraController.Instance.transform.forward, Quaternion.identity, null);
-                PeterExtensions.RenderObject(ActiveKnife, LayerMask.NameToLayer("Projectile"));
+                ActiveKnife.transform.RenderObject(LayerMask.NameToLayer("Projectile"));
                 ActiveKnife.GetComponent<KnifeObject>().timeLeft = timeToRun;
                 Vector3 launchForce = new Vector3(CameraController.Instance.transform.forward.x * _launchSpeed, CameraController.Instance.transform.forward.y * _launchSpeed, CameraController.Instance.transform.forward.z * _launchSpeed);
                 ActiveKnife.GetComponent<Rigidbody>().AddForce( launchForce, ForceMode.VelocityChange);
@@ -47,7 +47,7 @@ namespace RatMod.Weapon_Scripts
         {
             if (_knifePrefab == null)
             {
-                _knifePrefab = _man.assetBundle.PrefabFind(_man.assetBundle.name, "knifeobject");
+                _knifePrefab = _man.assetBundle.AssetFind<GameObject>("knifeobject");
             }
         }
     }

@@ -35,7 +35,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             part2 = transform.Find("Component-2");
             part3 = transform.Find("Component-3");
 
-            PeterExtensions.RenderObject(gameObject, LayerMask.NameToLayer("Projectile"));
+            proj.RenderObject(LayerMask.NameToLayer("Projectile"));
 
             proj.target = FindTarget();
             SetProjectile();
