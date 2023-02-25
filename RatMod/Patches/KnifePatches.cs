@@ -22,7 +22,7 @@ namespace RatMod.Patches
             KnifeObject knife = __instance.GetComponentInChildren<KnifeObject>();
             if (knife)
                 knife.transform.parent = null;
-            knife = GreechKnife.ActiveKnife?.GetComponent<KnifeObject>();
+            knife = GreechKnife.ActiveKnife?.GetComponent<KnifeObject>() ?? null;
             if (knife && Vector3.Distance(__instance.transform.position, knife.transform.position) < HEAL_DISTANCE)
                 knife.timeLeft += HEAL_AMOUNT;
         }

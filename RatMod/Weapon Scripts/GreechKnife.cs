@@ -40,6 +40,7 @@ namespace RatMod.Weapon_Scripts
             if (Fire2.WasPerformedThisFrame && ActiveKnife != null)
             {
                 ActiveKnife.GetComponent<KnifeObject>().Recall();
+                ActiveKnife = null;
             }
         }
 
