@@ -56,7 +56,6 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                 transform.parent = collider.transform;
                 _attached = true;
                 Target = collider.GetComponentInChildren<EnemyIdentifier>() ?? collider.GetComponentInChildren<EnemyIdentifierIdentifier>().eid;
-                UKLogger.Log(_hurting);
                 if (!_hurting)
                 {
                     _hurting = true;

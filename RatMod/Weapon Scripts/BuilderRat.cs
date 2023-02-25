@@ -64,12 +64,12 @@ namespace RatMod.Weapon_Scripts
             {
                 cooldownOff = false;
             }
-            CheatsManagerPatch.CheatStateChanged.AddListener(OnCheatChange);
+            Events.CheatStateChanged.AddListener(OnCheatChange);
         }
 
         private void OnDisable()
         {
-            CheatsManagerPatch.CheatStateChanged.RemoveListener(OnCheatChange);
+            Events.CheatStateChanged.RemoveListener(OnCheatChange);
         }
 
         private void Update()
@@ -97,7 +97,7 @@ namespace RatMod.Weapon_Scripts
                     turret.transform.LookAt(head);
                     turret.transform.rotation = Quaternion.FromToRotation(turret.transform.up, hit.normal) * transform.rotation;
                     turret.AddComponent<DestroyOnCheckpointRestart>();
-                    PeterExtensions.RenderObject(turret, LayerMask.NameToLayer("Outdoors"));
+                    turret.transform.RenderObject(LayerMask.NameToLayer("Outdoors"));
                     turret.SetActive(true);
                 }
             }
@@ -118,7 +118,7 @@ namespace RatMod.Weapon_Scripts
                     statue.transform.LookAt(head);
                     statue.transform.rotation = Quaternion.FromToRotation(statue.transform.up, hit.normal) * transform.rotation;
                     statue.AddComponent<DestroyOnCheckpointRestart>();
-                    PeterExtensions.RenderObject(statue, LayerMask.NameToLayer("Outdoors"));
+                    statue.transform.RenderObject(LayerMask.NameToLayer("Outdoors"));
                     _man.BuilderRat_lastStatue = statue;
                     statue.SetActive(true);
                 }
@@ -155,12 +155,12 @@ namespace RatMod.Weapon_Scripts
             if (txt_ready == null)
                 txt_ready = transform.Find("RAT/gun/Screen/TEXT/Ready").gameObject.GetComponent<MeshRenderer>();
             if (_turret == null)
-                _turret = _man.assetBundle.PrefabFind(_man.assetBundle.name, "turret");
+                _turret = _man.assetBundle.AssetFind<GameObject>("turret");
             if (_statue == null)
-                _statue = _man.assetBundle.PrefabFind(_man.assetBundle.name, "statue");
+                _statue = _man.assetBundle.AssetFind<GameObject>("statue");
         }
 
-        private void OnCheatChange()
+        private void OnCheatChange(string cheat)
         {
             cooldownOff = CheatsManager.Instance.GetCheatState("ultrakill.no-weapon-cooldown");
         }

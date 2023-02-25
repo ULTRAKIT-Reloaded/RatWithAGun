@@ -35,12 +35,12 @@ namespace RatMod.Weapon_Scripts
             {
                 cooldownOff = false;
             }
-            CheatsManagerPatch.CheatStateChanged.AddListener(OnCheatChange);
+            Events.CheatStateChanged.AddListener(OnCheatChange);
         }
 
         private void OnDisable()
         {
-            CheatsManagerPatch.CheatStateChanged.RemoveListener(OnCheatChange);
+            Events.CheatStateChanged.RemoveListener(OnCheatChange);
         }
 
         private void Update()
@@ -75,10 +75,10 @@ namespace RatMod.Weapon_Scripts
             if (origin == null)
                 origin = transform.Find("RAT/gun/MuzzleOrigin");
             if (projectile == null)
-                projectile = _man.assetBundle.PrefabFind(_man.assetBundle.name, "explosiveprojectile");
+                projectile = _man.assetBundle.AssetFind<GameObject>("explosiveprojectile");
         }
 
-        private void OnCheatChange()
+        private void OnCheatChange(string cheat)
         {
             cooldownOff = CheatsManager.Instance.GetCheatState("ultrakill.no-weapon-cooldown");
         }

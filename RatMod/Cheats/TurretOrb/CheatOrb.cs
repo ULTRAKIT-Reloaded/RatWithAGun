@@ -83,7 +83,7 @@ namespace RatMod.Cheats.TurretOrb
             if (origin == null)
                 origin = transform.Find("Origin");
             if (beam == null)
-                beam = DazeExtensions.PrefabFind("RevolverBeamAlt");
+                beam = AssetLoader.AssetFind<GameObject>("RevolverBeamAlt");
         }
     }
 }

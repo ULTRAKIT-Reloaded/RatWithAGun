@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ULTRAKIT.Data;
 using ULTRAKIT.Extensions;
+using ULTRAKIT.Extensions.Classes;
 using UnityEngine;
 
 namespace RatMod.Cheats.TurretOrb
@@ -15,9 +16,9 @@ namespace RatMod.Cheats.TurretOrb
 
         private static void Enable()
         {
-            activeOrb = GameObject.Instantiate(RatVariableManager.Instance.assetBundle.PrefabFind(RatVariableManager.Instance.assetBundle.name, "turretorb"), 
+            activeOrb = GameObject.Instantiate(RatVariableManager.Instance.assetBundle.AssetFind<GameObject>("turretorb"), 
                 NewMovement.Instance.transform.position + new Vector3(0, 5, 0), Quaternion.identity, NewMovement.Instance.transform);
-            PeterExtensions.RenderObject(activeOrb, LayerMask.NameToLayer("Outdoors"));
+            activeOrb.transform.RenderObject(LayerMask.NameToLayer("Outdoors"));
         }
 
         private static void Disable()

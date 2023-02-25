@@ -88,7 +88,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             if (origin == null)
                 origin = transform.Find("RAT/GUN/BARREL/MuzzleOrigin");
             if (beam == null)
-                beam = DazeExtensions.PrefabFind("RevolverBeamAlt");
+                beam = AssetLoader.AssetFind<GameObject>("RevolverBeamAlt");
         }
 
         private void DestroySelf()
