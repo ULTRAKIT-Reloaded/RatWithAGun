@@ -14,7 +14,6 @@ using ULTRAKIT.Extensions;
 
 namespace RatMod
 {
-    //[UKDependency("petersone1.ultrakitreloaded", "1.3.2")]
     [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.3.1", "Adds a collection of rats with a lust for blood", false, true)]
     public class Main : UKMod
     {
