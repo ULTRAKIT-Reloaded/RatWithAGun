@@ -16,7 +16,7 @@ namespace RatMod.Cheats.TurretOrb
 
         private static void Enable()
         {
-            activeOrb = GameObject.Instantiate(RatVariableManager.Instance.assetBundle.AssetFind<GameObject>("turretorb"), 
+            activeOrb = GameObject.Instantiate(RatVariableManager.Instance.assetBundle.LoadAsset<GameObject>("turretorb.prefab"), 
                 NewMovement.Instance.transform.position + new Vector3(0, 5, 0), Quaternion.identity, NewMovement.Instance.transform);
             activeOrb.transform.RenderObject(LayerMask.NameToLayer("Outdoors"));
         }

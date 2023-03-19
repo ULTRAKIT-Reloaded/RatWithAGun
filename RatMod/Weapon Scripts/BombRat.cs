@@ -75,7 +75,7 @@ namespace RatMod.Weapon_Scripts
             if (origin == null)
                 origin = transform.Find("RAT/gun/MuzzleOrigin");
             if (projectile == null)
-                projectile = _man.assetBundle.AssetFind<GameObject>("explosiveprojectile");
+                projectile = _man.assetBundle.LoadAsset<GameObject>("explosiveprojectile.prefab");
         }
 
         private void OnCheatChange(string cheat)

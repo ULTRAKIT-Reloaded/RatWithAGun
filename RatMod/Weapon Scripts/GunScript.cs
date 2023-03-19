@@ -99,7 +99,7 @@ namespace RatMod.Weapon_Scripts
             }
             if (beam == null)
             {
-                beam = AssetLoader.AssetFind<GameObject>("RevolverBeamAlt");
+                beam = AssetLoader.AssetFind<GameObject>("RevolverBeamAlt.prefab");
             }
         }
 
