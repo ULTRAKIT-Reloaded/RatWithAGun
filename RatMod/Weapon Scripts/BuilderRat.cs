@@ -155,9 +155,9 @@ namespace RatMod.Weapon_Scripts
             if (txt_ready == null)
                 txt_ready = transform.Find("RAT/gun/Screen/TEXT/Ready").gameObject.GetComponent<MeshRenderer>();
             if (_turret == null)
-                _turret = _man.assetBundle.AssetFind<GameObject>("turret");
+                _turret = _man.assetBundle.LoadAsset<GameObject>("turret.prefab");
             if (_statue == null)
-                _statue = _man.assetBundle.AssetFind<GameObject>("statue");
+                _statue = _man.assetBundle.LoadAsset<GameObject>("statue.prefab");
         }
 
         private void OnCheatChange(string cheat)

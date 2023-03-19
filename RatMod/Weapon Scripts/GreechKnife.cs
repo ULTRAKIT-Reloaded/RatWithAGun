@@ -48,7 +48,7 @@ namespace RatMod.Weapon_Scripts
         {
             if (_knifePrefab == null)
             {
-                _knifePrefab = _man.assetBundle.AssetFind<GameObject>("knifeobject");
+                _knifePrefab = _man.assetBundle.LoadAsset<GameObject>("knifeobject.prefab");
             }
         }
     }
