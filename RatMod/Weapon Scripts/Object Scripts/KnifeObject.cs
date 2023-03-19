@@ -71,6 +71,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             if (timeLeft <= 0f)
             {
                 _enabled = false;
+                GreechKnife.ActiveKnife = null;
                 Destroy(gameObject);
             }
             if (!_enabled) return;
