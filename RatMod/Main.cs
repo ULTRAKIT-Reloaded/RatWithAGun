@@ -11,10 +11,11 @@ using UnityEngine.SceneManagement;
 using HarmonyLib;
 using ULTRAKIT.Loader.Loaders;
 using ULTRAKIT.Extensions;
+using RatMod.Weapon_Scripts;
 
 namespace RatMod
 {
-    [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.3.2", "Adds a collection of rats with a lust for blood", false, true)]
+    [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.3.6", "Adds a collection of rats with a lust for blood", false, true)]
     public class Main : UKMod
     {
         private AssetBundle bundle = AssetBundle.LoadFromMemory(Properties.Resources.petersone1_ratwithagun);
@@ -40,6 +41,7 @@ namespace RatMod
                 CheatsManager.Instance.RegisterCheat(Cheats.TurretOrb.OrbEnabler.cheat);
             if (RatVariableManager.Instance)
                 RatVariableManager.Instance.assetBundle = bundle;
+            GreechKnife.ActiveKnife = null;
         }
 
         private static void Init()

@@ -34,6 +34,12 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             rb = GetComponent<Rigidbody>();
             agent = GetComponent<NavMeshAgent>();
             agent.areaMask = 13;
+            gameObject.AddComponent<DestroyOnCheckpointRestart>();
+        }
+
+        public void OnDisable()
+        {
+            GreechKnife.ActiveKnife = null;
         }
 
         public void Start()
@@ -71,6 +77,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             if (timeLeft <= 0f)
             {
                 _enabled = false;
+                GreechKnife.ActiveKnife = null;
                 Destroy(gameObject);
             }
             if (!_enabled) return;
