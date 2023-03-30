@@ -7,13 +7,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using ULTRAKIT.Extensions;
 using System.Collections;
+using ULTRAKIT.Loader.Loaders;
+using ULTRAKIT.Extensions.ObjectClasses;
 
 namespace RatMod
 {
     [ConfigureSingleton(SingletonFlags.PersistAutoInstance)]
     public class RatVariableManager : MonoSingleton<RatVariableManager>
     {
-        // AssetBundle
+        // Statics
+        public static bool isUnbalanced
+        {
+            get
+            {
+                OptionsLoader.GetCheckbox("rat.unbalance", out UKCheckbox box);
+                return box.GetValue();
+            }
+        }
+
+        // Asset Bundle
         public AssetBundle assetBundle;
 
         // Prefabs

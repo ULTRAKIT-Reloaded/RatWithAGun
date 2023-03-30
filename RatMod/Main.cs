@@ -24,6 +24,7 @@ namespace RatMod
         public override void OnModLoaded()
         {
             Init();
+            OptionsLoader.RegisterCheckbox("Rat With A Gun", "Balance Levels", "Unbalanced Mode", "rat.unbalance", false);
             SceneManager.sceneLoaded += OnSceneLoaded;
             weapons = WeaponLoader.LoadWeapons(bundle);
             BuffLoader.RegisterBuff(new Bigger());
