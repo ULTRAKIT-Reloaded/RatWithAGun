@@ -36,7 +36,7 @@ namespace RatMod
 
         // Gun Rat
         public int GunRat_ammo = 7;
-        public bool GunRat_reloading = false;
+        public bool GunRat_delay = false;
 
         // Builder Rat
         public bool BuilderRat_turretReady = true;
@@ -63,7 +63,7 @@ namespace RatMod
             Asset_MindflayerExplosion = AssetLoader.AssetFind<GameObject>("MindflayerExplosion.prefab");
 
             GunRat_ammo = 7;
-            GunRat_reloading = false;
+            GunRat_delay = false;
             BuilderRat_turretReady = true;
             BuilderRat_statueReady = true;
         }
@@ -95,6 +95,14 @@ namespace RatMod
                     renderer.enabled = false;
                 builderRat.txt_ready.enabled = true;
             }
+            yield return null;
+        }
+
+        public IEnumerator GunDelay()
+        {
+            GunRat_delay = true;
+            yield return new WaitForSeconds(0.5f);
+            GunRat_delay = false;
             yield return null;
         }
     }

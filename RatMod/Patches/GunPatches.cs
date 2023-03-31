@@ -19,7 +19,6 @@ namespace RatMod.Patches
         [HarmonyPatch("GetHealth"), HarmonyPostfix]
         static void GetHealthPostfix(NewMovement __instance, int health)
         {
-            UKLogger.Log(health);
             int ammoToAdd = 0;
             storedHealth += health;
             while (storedHealth >= HealthPerAmmo)
