@@ -7,6 +7,7 @@ using UMM;
 using UnityEngine;
 using ULTRAKIT.Extensions;
 using System.Collections;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace RatMod.Weapon_Scripts.Object_Scripts
 {
@@ -43,15 +44,10 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                 if (enemyList.Length == 0)
                     return;
 
-                SortedDictionary<float, int> distances = new SortedDictionary<float, int>();
+                Dictionary<float, int> distances = new Dictionary<float, int>();
                 for (int i = 0; i < enemyList.Length; i++)
                 {
-                    distances.Add(Vector3.Distance(transform.position, enemyList[i].transform.position), i);
-                }
-
-                foreach (var pair in distances)
-                {
-                    EnemyIdentifier enemy = enemyList[pair.Value];
+                    EnemyIdentifier enemy = enemyList[i];
 
                     if (enemy.enemyType == EnemyType.Idol || enemy.blessed)
                         continue;
@@ -64,11 +60,17 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                     Physics.Raycast(gun.position, d, out hit, Mathf.Infinity, mask);
                     if (hit.transform.GetComponentInChildren<EnemyIdentifier>() || hit.transform.GetComponentInChildren<EnemyIdentifierIdentifier>())
                     {
-                        target = enemy;
-                        direction = d;
-                        foundTarget = true;
-                        break;
+                        float dist = Vector3.Distance(transform.position, enemy.transform.position);
+                        if (!distances.ContainsKey(dist))
+                            distances.Add(dist, i);
                     }
+                }
+
+                if (distances.Count > 0)
+                {
+                    target = enemyList[distances[distances.Min(v => v.Key)]];
+                    direction = target.weakPoint ? (target.weakPoint.transform.position - gun.position).normalized : (target.transform.position - gun.position).normalized;
+                    foundTarget = true;
                 }
 
                 if (foundTarget)

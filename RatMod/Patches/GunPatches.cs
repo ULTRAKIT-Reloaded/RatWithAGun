@@ -29,7 +29,8 @@ namespace RatMod.Patches
             if (RatVariableManager.Instance)
             {
                 RatVariableManager.Instance.GunRat_ammo = Mathf.Clamp(RatVariableManager.Instance.GunRat_ammo + ammoToAdd, 0, 7);
-                GunScript.Refresh();
+                if (GunScript.isActive)
+                    GunScript.Refresh();
             }
         }
     }

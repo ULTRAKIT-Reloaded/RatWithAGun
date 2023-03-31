@@ -98,10 +98,10 @@ namespace RatMod
             yield return null;
         }
 
-        public IEnumerator GunDelay()
+        public IEnumerator GunDelay(float time)
         {
             GunRat_delay = true;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(time);
             GunRat_delay = false;
             yield return null;
         }

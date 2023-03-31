@@ -12,6 +12,7 @@ namespace RatMod.Weapon_Scripts
     public class GunScript : MonoBehaviour
     {
         public static Action Refresh;
+        public static bool isActive = false;
 
         private bool delay => _man.GunRat_delay;
         private int ammo { get { return _man.GunRat_ammo; } set { _man.GunRat_ammo = value; } }
@@ -27,6 +28,7 @@ namespace RatMod.Weapon_Scripts
 
         private void RefreshCounter()
         {
+            if (!isActive) return;
             foreach (Renderer renderer in txt_num)
                 renderer.enabled = false;
             txt_num[_man.GunRat_ammo].enabled = true;
@@ -34,7 +36,9 @@ namespace RatMod.Weapon_Scripts
 
         private void OnEnable()
         {
+            isActive = true;
             InitializeFields();
+            RefreshCounter();
             txt_num[_man.GunRat_ammo].enabled = true;
             try
             {
@@ -49,6 +53,7 @@ namespace RatMod.Weapon_Scripts
 
         private void OnDisable()
         {
+            isActive = false;
             Events.CheatStateChanged.RemoveListener(OnCheatChange);
         }
 
@@ -61,7 +66,10 @@ namespace RatMod.Weapon_Scripts
             {
                 txt_num[ammo].enabled = false;
                 if (!cooldownOff)
+                {
                     ammo--;
+                    Delay();
+                }
                 txt_num[ammo].enabled = true;
 
                 GameObject shot = Instantiate(beam);
@@ -69,6 +77,11 @@ namespace RatMod.Weapon_Scripts
                 shot.transform.position = origin.transform.position;
                 shot.transform.rotation = CameraController.Instance.transform.rotation;
             }
+        }
+
+        private void Delay()
+        {
+            _man.StartCoroutine(_man.GunDelay(0.28f));
         }
 
         private void InitializeFields()
