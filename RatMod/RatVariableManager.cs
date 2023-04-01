@@ -7,13 +7,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using ULTRAKIT.Extensions;
 using System.Collections;
+using ULTRAKIT.Loader.Loaders;
+using ULTRAKIT.Extensions.ObjectClasses;
 
 namespace RatMod
 {
     [ConfigureSingleton(SingletonFlags.PersistAutoInstance)]
     public class RatVariableManager : MonoSingleton<RatVariableManager>
     {
-        // AssetBundle
+        // Statics
+        public static bool isUnbalanced
+        {
+            get
+            {
+                OptionsLoader.GetCheckbox("rat.unbalance", out UKCheckbox box);
+                return box.GetValue();
+            }
+        }
+
+        // Asset Bundle
         public AssetBundle assetBundle;
 
         // Prefabs
@@ -24,7 +36,7 @@ namespace RatMod
 
         // Gun Rat
         public int GunRat_ammo = 7;
-        public bool GunRat_reloading = false;
+        public bool GunRat_delay = false;
 
         // Builder Rat
         public bool BuilderRat_turretReady = true;
@@ -51,7 +63,7 @@ namespace RatMod
             Asset_MindflayerExplosion = AssetLoader.AssetFind<GameObject>("MindflayerExplosion.prefab");
 
             GunRat_ammo = 7;
-            GunRat_reloading = false;
+            GunRat_delay = false;
             BuilderRat_turretReady = true;
             BuilderRat_statueReady = true;
         }
@@ -83,6 +95,14 @@ namespace RatMod
                     renderer.enabled = false;
                 builderRat.txt_ready.enabled = true;
             }
+            yield return null;
+        }
+
+        public IEnumerator GunDelay(float time)
+        {
+            GunRat_delay = true;
+            yield return new WaitForSeconds(time);
+            GunRat_delay = false;
             yield return null;
         }
     }

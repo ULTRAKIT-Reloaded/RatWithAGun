@@ -36,32 +36,29 @@ namespace RatMod.Cheats.TurretOrb
             if (enemyList.Length == 0)
                 return;
 
-            SortedDictionary<float, int> distances = new SortedDictionary<float, int>();
+            Dictionary<float, int> distances = new Dictionary<float, int>();
             for (int i = 0; i < enemyList.Length; i++)
             {
-                distances.Add(Vector3.Distance(origin.position, enemyList[i].transform.position), i);
-            }
-
-            foreach (var pair in distances)
-            {
-                EnemyIdentifier enemy = enemyList[pair.Value];
+                EnemyIdentifier enemy = enemyList[i];
 
                 if (enemy.enemyType == EnemyType.Idol)
                     continue;
 
-                Vector3 d = (enemy.transform.position - origin.position).normalized;
-                if (enemy.weakPoint)
-                    d = (enemy.weakPoint.transform.position - origin.position).normalized;
+                Vector3 d = enemy.weakPoint ? (enemy.weakPoint.transform.position - origin.position).normalized : (enemy.transform.position - origin.position).normalized;
 
                 RaycastHit hit;
                 Physics.Raycast(origin.position, d, out hit, Mathf.Infinity, mask);
                 if (hit.transform.GetComponentInChildren<EnemyIdentifier>() || hit.transform.GetComponentInChildren<EnemyIdentifierIdentifier>())
                 {
-                    target = enemy;
-                    direction = d;
-                    foundTarget = true;
-                    break;
+                    distances.Add(Vector3.Distance(origin.position, enemyList[i].transform.position), i);
                 }
+            }
+
+            if (distances.Count > 0)
+            {
+                target = enemyList[distances[distances.Min(v => v.Key)]];
+                direction = target.weakPoint ? (target.weakPoint.transform.position - origin.position).normalized : (target.transform.position - origin.position).normalized;
+                foundTarget = true;
             }
 
             if (foundTarget)

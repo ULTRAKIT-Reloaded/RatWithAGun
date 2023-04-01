@@ -114,27 +114,22 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             if (enemyList.Length == 0)
                 return;
 
-            SortedDictionary<float, int> distances = new SortedDictionary<float, int>();
+            Dictionary<float, int> distances = new Dictionary<float, int>();
             for (int i = 0; i < enemyList.Length; i++)
             {
-                try
+                agent.SetDestination(enemyList[i].transform.position);
+                if (agent.hasPath)
                 {
-                    distances.Add(Vector3.Distance(transform.position, enemyList[i].transform.position), i);
-                }
-                catch (ArgumentException)
-                {
-                    UKLogger.LogWarning("More than one enemy at the same distance from knife. Skipping...");
+                    float dist = Vector3.Distance(transform.position, enemyList[i].transform.position);
+                    if (!distances.ContainsKey(dist))
+                        distances.Add(dist, i);
                 }
             }
 
-            foreach (var pair in distances)
+            if (distances.Count > 0)
             {
-                agent.SetDestination(enemyList[pair.Value].transform.position);
-                if (agent.hasPath)
-                {
-                    Target = enemyList[pair.Value];
-                    break;
-                }
+                Target = enemyList[distances[distances.Min(k => k.Key)]];
+                agent.SetDestination(Target.transform.position);
             }
             _findingTarget = false;
         }
@@ -157,7 +152,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             Vector3 startPos = transform.position;
             Vector3 target = new Vector3();
             bool isWeakpoint = Target.weakPoint;
-            while (Target && !Target.dead && /*!_attached*/ Vector3.Distance(transform.position, target) > 0.2f)
+            while (Target && !Target.dead && Vector3.Distance(transform.position, target) > 0.2f)
             {
                 if (isWeakpoint)
                 {

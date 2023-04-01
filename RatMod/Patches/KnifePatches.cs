@@ -8,6 +8,7 @@ using HarmonyLib;
 using RatMod.Weapon_Scripts.Object_Scripts;
 using ULTRAKIT.Extensions;
 using RatMod.Weapon_Scripts;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace RatMod.Patches
 {

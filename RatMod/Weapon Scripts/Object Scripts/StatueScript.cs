@@ -15,18 +15,20 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
         public GameObject sourceWeapon;
 
         private RatVariableManager _man = RatVariableManager.Instance;
-        private List<EnemyIdentifier> killedEnemies;
+        private List<EnemyIdentifier> harmedEnemies;
 
-        bool active = true;
-        int counter = 0;
+        private bool active = true;
+        private int counter = 0;
 
         private void Start()
         {
-            killedEnemies = new List<EnemyIdentifier>();
-            GameObject.Instantiate(_man.Asset_ExplosionPrime, transform.position, Quaternion.identity);
+            harmedEnemies = new List<EnemyIdentifier>();
             GameObject.Instantiate(_man.Asset_PhysicalShockwaveHarmless, transform.position, Quaternion.identity);
-            GameObject expl = GameObject.Instantiate(_man.Asset_ExplosionSuper, transform.position, Quaternion.identity);
-            expl.transform.localScale = new Vector3(100, 100, 100);
+            Explosion exp1 = GameObject.Instantiate(_man.Asset_ExplosionPrime, transform.position, Quaternion.identity).GetComponentInChildren<Explosion>();
+            Explosion exp2 = GameObject.Instantiate(_man.Asset_ExplosionSuper, transform.position, Quaternion.identity).GetComponentInChildren<Explosion>();
+            exp2.transform.localScale = new Vector3(100, 100, 100);
+            exp1.enemyDamageMultiplier = 0;
+            exp2.enemyDamageMultiplier = 0;
             float timeToWait = Time.deltaTime * 3;
             Invoke("Deactivate", timeToWait);
 
@@ -45,18 +47,22 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
 
         private void OnTriggerEnter(Collider collider)
         {
-            if (active && collider.gameObject.GetComponentInParent<EnemyIdentifier>() && !killedEnemies.Contains(collider.gameObject.GetComponentInParent<EnemyIdentifier>()))
+            if (active && collider.gameObject.GetComponentInParent<EnemyIdentifier>() && !harmedEnemies.Contains(collider.gameObject.GetComponentInParent<EnemyIdentifier>()))
             {
                 EnemyIdentifier enemy = collider.gameObject.GetComponentInParent<EnemyIdentifier>();
+                if (enemy.dead) return;
 
-                enemy.Explode();
-                if (enemy.enemyType == EnemyType.Idol)
-                    enemy.GetComponent<Idol>().Death();
-                killedEnemies.Add(enemy);
-                counter++;
+                harmedEnemies.Add(enemy);
                 bool boss = enemy.bigEnemy;
-                StyleHUD.Instance.DecayFreshness(sourceWeapon, "ultrakill.exploded", boss);
+                if (Damage(enemy, RatVariableManager.isUnbalanced))
+                {
+                    counter++;
+                    StyleHUD.Instance.DecayFreshness(sourceWeapon, "ultrakill.exploded", boss);
+                }
+                StyleHUD.Instance.DecayFreshness(sourceWeapon, "ultrakill.explosionhit", boss);
 
+                if (counter == 0)
+                    return;
                 if (counter == 1)
                 {
                     StyleHUD.Instance.AddPoints(350, "<color=green>FRESHLY MURDERED</color>");
@@ -64,6 +70,27 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
                 }
                 StyleHUD.Instance.AddPoints(350, $"<color=green>FRESHLY MURDERED x{counter}</color>");
             }
+        }
+
+        private bool Damage(EnemyIdentifier enemy, bool isUnbalanced)
+        {
+            if (isUnbalanced)
+            {
+                enemy.Explode();
+                if (enemy.enemyType == EnemyType.Idol)
+                    enemy.GetComponent<Idol>().Death();
+                enemy.hitter = "greechStatue";
+                return true;
+            }
+            enemy.DeliverDamage(enemy.gameObject, Vector3.up, enemy.transform.position, 5, true, 0, sourceWeapon);
+            enemy.hitter = "greechStatue";
+            if (!enemy.hitterWeapons.Contains("greechStatue"))
+            {
+                enemy.hitterWeapons.Add("greechStatue");
+            }
+            if (enemy.dead)
+                return true;
+            return false;
         }
 
         private void Deactivate()
