@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using ULTRAKIT.Extensions;
 using System.Collections;
 using ULTRAKIT.Loader.Loaders;
-using ULTRAKIT.Extensions.ObjectClasses;
+using ULTRAKIT.Extensions.Classes;
 
 namespace RatMod
 {
