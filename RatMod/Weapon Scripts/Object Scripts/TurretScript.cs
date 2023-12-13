@@ -90,7 +90,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             if (origin == null)
                 origin = transform.Find("RAT/GUN/BARREL/MuzzleOrigin");
             if (beam == null)
-                beam = AssetLoader.AssetFind<GameObject>("RevolverBeamAlt.prefab");
+                beam = AssetLoader.AssetFind<GameObject>("Revolver Beam Alternative.prefab");
         }
 
         private void DestroySelf()

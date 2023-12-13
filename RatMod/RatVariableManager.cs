@@ -57,10 +57,10 @@ namespace RatMod
 
         public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
-            Asset_ExplosionPrime = AssetLoader.AssetFind<GameObject>("ExplosionPrime.prefab");
-            Asset_ExplosionSuper = AssetLoader.AssetFind<GameObject>("ExplosionSuper.prefab");
+            Asset_ExplosionPrime = AssetLoader.AssetFind<GameObject>("Explosion Minos Prime.prefab");
+            Asset_ExplosionSuper = AssetLoader.AssetFind<GameObject>("Explosion Super.prefab");
             Asset_PhysicalShockwaveHarmless = AssetLoader.AssetFind<GameObject>("PhysicalShockwaveHarmless.prefab");
-            Asset_MindflayerExplosion = AssetLoader.AssetFind<GameObject>("MindflayerExplosion.prefab");
+            Asset_MindflayerExplosion = AssetLoader.AssetFind<GameObject>("Explosion Mindflayer.prefab");
 
             GunRat_ammo = 7;
             GunRat_delay = false;

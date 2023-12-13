@@ -80,7 +80,7 @@ namespace RatMod.Cheats.TurretOrb
             if (origin == null)
                 origin = transform.Find("Origin");
             if (beam == null)
-                beam = AssetLoader.AssetFind<GameObject>("RevolverBeamAlt.prefab");
+                beam = AssetLoader.AssetFind<GameObject>("Revolver Beam Alternative.prefab");
         }
     }
 }
