@@ -79,7 +79,7 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             gren.sourceWeapon = gameObject;
         }
 
-        private Transform FindTarget()
+        private EnemyTarget FindTarget()
         {
             bool targetFound = false;
             if (EnemyTracker.Instance.GetCurrentEnemies().Count == 0)
@@ -112,13 +112,28 @@ namespace RatMod.Weapon_Scripts.Object_Scripts
             }
 
             if (!targetFound)
-            {
-                EnemyIdentifier fleshPrison = enemies.Where(n => n.enemyType == EnemyType.FleshPrison).ToArray()?.First();
-                if (fleshPrison != null)
-                    return fleshPrison.transform;
+                chosenEnemy = GetFP(enemies);
+
+            if (chosenEnemy == null)
                 return null;
-            }
-            return chosenEnemy.transform;
+
+            EnemyTarget target = new EnemyTarget
+            {
+                isPlayer = false,
+                targetTransform = chosenEnemy.transform,
+                enemyIdentifier = chosenEnemy,
+                rigidbody = chosenEnemy.GetComponentInChildren<Rigidbody>()
+            };
+
+            return target;
+        }
+
+        private EnemyIdentifier GetFP(EnemyIdentifier[] enemies)
+        {
+            EnemyIdentifier fleshPrison = enemies.Where(n => n.enemyType == EnemyType.FleshPrison).ToArray()?.First();
+            if (fleshPrison != null)
+                return fleshPrison;
+            return null;
         }
     }
 }

@@ -12,28 +12,24 @@ using HarmonyLib;
 using ULTRAKIT.Loader.Loaders;
 using ULTRAKIT.Extensions;
 using RatMod.Weapon_Scripts;
+using BepInEx;
 
 namespace RatMod
 {
-    [UKPlugin("petersone1.ratwithagun", "Rat With A Gun", "0.4.2", "Adds a collection of rats with a lust for blood", false, true)]
-    public class Main : UKMod
+    [BepInPlugin("agent.rat_with_a_gun", "Rat With A Gun", "0.5.0")]
+    [BepInDependency("ULTRAKIT.core_module")]
+    public class Main : BaseUnityPlugin
     {
         private AssetBundle bundle = AssetBundle.LoadFromMemory(Properties.Resources.petersone1_ratwithagun);
         public Weapon[] weapons;
 
-        public override void OnModLoaded()
+        private void Awake()
         {
             Init();
             OptionsLoader.RegisterCheckbox("Rat With A Gun", "Balance Levels", "Unbalanced Mode", "rat.unbalance", false);
             SceneManager.sceneLoaded += OnSceneLoaded;
             weapons = WeaponLoader.LoadWeapons(bundle);
             BuffLoader.RegisterBuff(new Bigger());
-        }
-
-        public override void OnModUnload()
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            WeaponLoader.UnloadWeapons("petersone1_ratwithagun");
         }
 
         public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
